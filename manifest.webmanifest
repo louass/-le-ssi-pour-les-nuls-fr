@@ -1,0 +1,15 @@
+{
+  "name": "Le SSI pour les Nuls FR",
+  "short_name": "SSI Nuls FR",
+  "description": "Guide pratique SSI : comprendre, dépanner, câbler et intervenir.",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#b91c1c",
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

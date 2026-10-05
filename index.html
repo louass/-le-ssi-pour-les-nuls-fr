@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b91c1c">
+<meta name="description" content="Le SSI pour les Nuls FR - Comprendre, dépanner, câbler et intervenir en SSI">
+<title>Le SSI pour les Nuls • FR — Guide pratique SSI</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SSI Nuls FR">
+
+<style>
+:root{
+  --red:#b91c1c; --red2:#dc2626; --dark:#111827; --muted:#64748b;
+  --bg:#f5f7fa; --card:#fff; --line:#e5e7eb; --green:#15803d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--dark)}
+a{text-decoration:none;color:inherit}
+header{background:radial-gradient(circle at 85% 10%,#ef4444 0,transparent 28%),linear-gradient(135deg,#090d14,#171b24 55%,#7f1d1d);color:white;padding:18px 16px 28px;position:relative;overflow:hidden}
+header:after{content:"🔥";position:absolute;right:-10px;top:8px;font-size:100px;opacity:.12}
+.top{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-weight:900;font-size:21px;letter-spacing:.3px}
+.badge{background:#ef4444;color:#fff;box-shadow:0 0 24px #ef444466;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.hero{max-width:1100px;margin:28px auto 0}
+.hero h1{font-size:clamp(30px,7vw,52px);line-height:1.02;margin:0 0 12px}
+.hero p{max-width:700px;margin:0;color:#e5e7eb;font-size:16px;line-height:1.55}
+.search{max-width:1100px;margin:-20px auto 0;padding:0 16px;position:relative;z-index:2}
+.searchbox{background:white;border-top:3px solid #dc2626;border:1px solid var(--line);box-shadow:0 10px 30px #00000012;border-radius:16px;padding:12px;display:flex;gap:10px}
+.searchbox input{width:100%;border:0;outline:0;font-size:16px;padding:8px}
+.container{max-width:1100px;margin:auto;padding:25px 16px 60px}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:28px 0 14px}
+.section-title h2{margin:0;font-size:22px}
+.section-title span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 14px #00000006;transition:.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #00000010}
+.icon{font-size:28px;margin-bottom:12px}
+.card h3{margin:0 0 7px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.quick a{display:block;background:white;border:1px solid var(--line);border-radius:14px;padding:16px;font-weight:750}
+.quick small{display:block;color:var(--muted);font-weight:400;margin-top:5px}
+.alert{background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:17px;margin-top:20px}
+.alert strong{color:#9a3412}
+.brands{display:flex;flex-wrap:wrap;gap:9px}
+.brand{background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-weight:700;font-size:14px}
+.faults{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.fault{background:white;border:1px solid var(--line);border-radius:14px;padding:15px}
+.fault b{display:block;margin-bottom:5px}
+.fault span{color:var(--muted);font-size:13px}
+footer{background:#111827;color:#cbd5e1;padding:30px 16px;text-align:center}
+footer strong{color:white}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.quick{grid-template-columns:1fr}.faults{grid-template-columns:1fr}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.hero h1{font-size:36px}.top{align-items:flex-start}}
+.hidden{display:none!important}
+
+.toolgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tool{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}.tool label{display:block;font-size:12px;font-weight:800;margin:9px 0 5px}.tool input,.tool select,.tool textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}.tool button,.btn{border:0;background:var(--red2);color:#fff;padding:11px 14px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:10px}.result{margin-top:10px;padding:10px;border-radius:10px;background:#f1f5f9;font-weight:750}.steps{counter-reset:s}.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 15px 15px 48px;margin:9px 0}.step:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:14px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--red2);color:#fff;font-weight:900;font-size:12px}.gloss{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.term{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}.term b{color:#991b1b}.term small{display:block;color:var(--muted);margin-top:4px;line-height:1.4}.nav{position:sticky;top:0;z-index:20;background:#111827ee;backdrop-filter:blur(10px);overflow:auto;white-space:nowrap;padding:9px 12px;text-align:center}.nav a{display:inline-block;color:#fff;padding:8px 10px;font-size:13px;font-weight:800}.pill{display:inline-block;background:#fee2e2;color:#991b1b;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900}.report-actions{display:flex;gap:8px;flex-wrap:wrap}@media(max-width:800px){.toolgrid,.gloss{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="logo">🔥 LE SSI POUR LES NULS <span style="opacity:.75">• FR</span></div>
+    <div class="badge">100% PRATIQUE</div>
+  </div>
+  <div class="hero">
+    <h1>Le SSI, enfin simple.</h1>
+    <p>Comprendre • Dépanner • Câbler • Intervenir. Le guide pratique pensé pour retrouver rapidement les bonnes informations SSI sur le terrain.</p>
+  </div>
+</header>
+<nav class="nav"><a href="#depannage">🚨 Dépannage</a><a href="#outils">🧮 Outils</a><a href="#multimetre">📟 Multimètre</a><a href="#glossaire">📖 Glossaire</a><a href="#rapport">📝 Rapport</a><a href="#documentation">📚 Docs</a></nav>
+
+<div class="search">
+  <div class="searchbox">
+    <span>🔎</span>
+    <input id="search" type="search" placeholder="Quel est ton problème aujourd’hui ? Ex : défaut liaison, batterie, DEF..." oninput="filterSite()">
+  </div>
+</div>
+
+<main class="container">
+  <div class="section-title"><h2>⚡ Accès rapide</h2><span>Les outils les plus utiles sur chantier</span></div>
+  <div class="quick">
+    <a href="#depannage">🧯 Urgence terrain<small>Partir directement d’un défaut ou symptôme</small></a>
+    <a href="#materiels">🧰 Matériels<small>Centrales, CMSI, ECS, DAS, diffuseurs...</small></a>
+    <a href="#documentation">📚 Documentation<small>Notices et ressources fabricants</small></a>
+  </div>
+
+  <div class="section-title" id="materiels"><h2>🧰 Matériels SSI</h2><span>Rubriques à développer</span></div>
+  <div class="grid searchable">
+    <a class="card" href="#centrales"><div class="icon">🖥️</div><h3>Centrales ECS</h3><p>Adressables, conventionnelles, zones, boucles et alimentations.</p></a>
+    <a class="card" href="#cmsi"><div class="icon">🚪</div><h3>CMSI</h3><p>UGA, UCMC, fonctions de mise en sécurité et commandes DAS.</p></a>
+    <a class="card" href="#detecteurs"><div class="icon">🔥</div><h3>Détection incendie</h3><p>Détecteurs, déclencheurs manuels, indicateurs et lignes de détection.</p></a>
+    <a class="card" href="#alarme"><div class="icon">🔊</div><h3>Alarme</h3><p>Diffuseurs sonores, lumineux, BAAS et équipements radio.</p></a>
+    <a class="card" href="#das"><div class="icon">⚙️</div><h3>DAS</h3><p>Portes, clapets, volets, exutoires et lignes de commande.</p></a>
+    <a class="card" href="#alim"><div class="icon">🔋</div><h3>Alimentations</h3><p>Batteries, AES, tensions et contrôles au multimètre.</p></a>
+    <a class="card" href="#radio"><div class="icon">📡</div><h3>SSI radio</h3><p>Appairage, liaison radio, défauts et maintenance.</p></a>
+    <a class="card" href="#reseau"><div class="icon">🔗</div><h3>Réseaux / liaisons</h3><p>Bus, répéteurs, cartes et défauts de communication.</p></a>
+  </div>
+
+  <div class="section-title" id="depannage"><h2>🚨 Dépannage rapide</h2><span>Exemples de diagnostic</span></div>
+  <div class="faults searchable">
+    <div class="fault"><b>Défaut liaison</b><span>Contrôler l'état de la ligne, continuité, court-circuit, alimentation et terminaison selon le système.</span></div>
+    <div class="fault"><b>Défaut batterie</b><span>Vérifier présence secteur, tension batterie, état des fusibles et capacité de l'accumulateur.</span></div>
+    <div class="fault"><b>Défaut système</b><span>Relever le libellé exact avant toute remise à zéro et consulter la notice correspondant à la centrale.</span></div>
+    <div class="fault"><b>Détecteur en défaut</b><span>Identifier l'adresse ou la zone, vérifier le détecteur, son socle et la ligne avant remplacement.</span></div>
+    <div class="fault"><b>Diffuseur sonore</b><span>Vérifier alimentation, ligne, polarité et éventuelle résistance de fin de ligne suivant le matériel.</span></div>
+    <div class="fault"><b>DAS ne réagit pas</b><span>Vérifier commande, alimentation, position de sécurité et retour d'information conformément au SSI.</span></div>
+  </div>
+
+  <div class="alert">
+    <strong>⚠️ Important sécurité</strong><br>
+    Les informations de ce site sont une aide au diagnostic et ne remplacent pas la notice constructeur, les règles d'installation, les prescriptions du site ou les normes applicables. Avant toute manipulation, sécuriser l'installation et prévenir les personnes concernées.
+  </div>
+
+
+  <div class="section-title" id="outils"><h2>🧮 Boîte à outils terrain</h2><span>Calculs rapides</span></div>
+  <div class="toolgrid searchable">
+    <div class="tool"><span class="pill">ÉLECTRICITÉ</span><h3>⚡ Loi d’Ohm</h3><label>Tension U (V)</label><input id="ohmU" type="number" step="any" placeholder="ex. 24"><label>Résistance R (Ω)</label><input id="ohmR" type="number" step="any" placeholder="ex. 1000"><button onclick="calcOhm()">Calculer I</button><div id="ohmRes" class="result">I = —</div></div>
+    <div class="tool"><span class="pill">CÂBLE</span><h3>📏 Chute de tension</h3><label>Longueur aller (m)</label><input id="dropL" type="number" placeholder="ex. 100"><label>Courant (A)</label><input id="dropI" type="number" step="any" placeholder="ex. 0.5"><label>Section cuivre (mm²)</label><input id="dropS" type="number" step="any" value="1.5"><button onclick="calcDrop()">Calculer</button><div id="dropRes" class="result">ΔU = —</div></div>
+    <div class="tool"><span class="pill">BATTERIE</span><h3>🔋 Autonomie théorique</h3><label>Capacité (Ah)</label><input id="batC" type="number" step="any" placeholder="ex. 7"><label>Consommation (A)</label><input id="batI" type="number" step="any" placeholder="ex. 0.35"><button onclick="calcBat()">Calculer</button><div id="batRes" class="result">Autonomie = —</div><small>Valeur théorique uniquement : dimensionnement réel selon fabricant/réglementation.</small></div>
+  </div>
+
+  <div class="section-title" id="multimetre"><h2>📟 Contrôles au multimètre</h2><span>Réflexes essentiels</span></div>
+  <div class="steps searchable">
+    <div class="step"><b>Mesure de tension</b><br><span>Choisir V continu ou alternatif selon le circuit, puis mesurer en parallèle. Ne jamais utiliser le mode ampèremètre comme un voltmètre.</span></div>
+    <div class="step"><b>Continuité / résistance</b><br><span>Mettre hors tension et isoler le circuit avant une mesure de résistance ou de continuité. Une tension présente peut fausser la mesure ou endommager l’appareil.</span></div>
+    <div class="step"><b>Avant de remplacer un équipement</b><br><span>Relever le défaut exact, l’adresse/zone, les tensions utiles et l’état de la ligne. Comparer ensuite avec la notice du modèle précis.</span></div>
+    <div class="step"><b>Après intervention</b><br><span>Rétablir les sécurités, vérifier le retour à l’état normal et réaliser les essais autorisés par la procédure du site.</span></div>
+  </div>
+
+  <div class="section-title" id="glossaire"><h2>📖 Mini glossaire SSI</h2><span>Les sigles à connaître</span></div>
+  <div class="gloss searchable">
+    <div class="term"><b>SSI</b><small>Système de Sécurité Incendie.</small></div><div class="term"><b>SDI</b><small>Système de Détection Incendie.</small></div><div class="term"><b>ECS</b><small>Équipement de Contrôle et de Signalisation.</small></div><div class="term"><b>CMSI</b><small>Centralisateur de Mise en Sécurité Incendie.</small></div><div class="term"><b>DAS</b><small>Dispositif Actionné de Sécurité.</small></div><div class="term"><b>UGA</b><small>Unité de Gestion d’Alarme.</small></div><div class="term"><b>DM</b><small>Déclencheur Manuel.</small></div><div class="term"><b>DS</b><small>Diffuseur Sonore.</small></div><div class="term"><b>AES</b><small>Alimentation Électrique de Sécurité.</small></div>
+  </div>
+
+  <div class="section-title" id="rapport"><h2>📝 Rapport d’intervention</h2><span>À remplir sur le téléphone</span></div>
+  <div class="tool">
+    <label>Site / client</label><input id="rSite" placeholder="Nom du site"><label>Matériel / centrale</label><input id="rMat" placeholder="Ex. ECS / marque / modèle"><label>Défaut constaté</label><textarea id="rDef" rows="3" placeholder="Libellé exact du défaut..."></textarea><label>Contrôles et travaux réalisés</label><textarea id="rAct" rows="4" placeholder="Mesures, câblage, remplacement, essais..."></textarea><label>État à la fin de l’intervention</label><select id="rEtat"><option>Installation revenue à l’état normal</option><option>Défaut toujours présent</option><option>Installation laissée en sécurité / attente pièce</option><option>À contrôler par le mainteneur / fabricant</option></select><div class="report-actions"><button onclick="makeReport()">Générer le rapport</button><button onclick="copyReport()" style="background:#334155">Copier</button></div><textarea id="reportOut" rows="10" style="margin-top:12px" placeholder="Le compte rendu apparaîtra ici..."></textarea>
+  </div>
+
+  <div class="section-title" id="documentation"><h2>📚 Documentation & liens utiles</h2><span>À compléter avec tes liens</span></div>
+  <div class="grid searchable">
+    <a class="card" href="https://www.defonline.com/" target="_blank" rel="noopener"><div class="icon">🏭</div><h3>DEF</h3><p>Accès au site officiel du fabricant.</p></a>
+    <a class="card" href="https://www.esser-systems.com/" target="_blank" rel="noopener"><div class="icon">🏭</div><h3>ESSER</h3><p>Site officiel et ressources fabricant.</p></a>
+    <a class="card" href="https://www.eaton.com/fr/fr-fr.html" target="_blank" rel="noopener"><div class="icon">🏭</div><h3>Eaton</h3><p>Site officiel du fabricant.</p></a>
+    <a class="card" href="https://www.chubbfiresecurity.com/" target="_blank" rel="noopener"><div class="icon">🏭</div><h3>Chubb</h3><p>Site officiel sécurité incendie.</p></a>
+  </div>
+
+  <div class="section-title"><h2>🏷️ Marques</h2><span>Catalogue évolutif</span></div>
+  <div class="brands searchable">
+    <span class="brand">DEF</span><span class="brand">Nugelec</span><span class="brand">ESSER</span>
+    <span class="brand">Chubb</span><span class="brand">Eaton</span><span class="brand">Siemens</span>
+    <span class="brand">Schneider</span><span class="brand">Honeywell</span><span class="brand">Autres</span>
+  </div>
+
+  <div class="section-title"><h2>💡 Idées pour la prochaine version</h2></div>
+  <div class="grid">
+    <div class="card"><div class="icon">🔍</div><h3>Recherche par défaut</h3><p>Tu tapes le défaut affiché par la centrale et le site te propose les vérifications.</p></div>
+    <div class="card"><div class="icon">📷</div><h3>Identifier par photo</h3><p>Une rubrique pour reconnaître une centrale ou une carte à partir d'une photo.</p></div>
+    <div class="card"><div class="icon">📐</div><h3>Schémas</h3><p>Bibliothèque de schémas de câblage classés par matériel.</p></div>
+    <div class="card"><div class="icon">📝</div><h3>Rapport d'intervention</h3><p>Créer rapidement un compte rendu de dépannage depuis le téléphone.</p></div>
+  </div>
+</main>
+
+<footer>
+  <strong>🔥 LE SSI POUR LES NULS • FR</strong><br>
+  <span>Comprendre • Dépanner • Câbler • Intervenir</span><br><br>
+  <small>Version 3.0 • Guide SSI pratique et indépendant • Outils utilisables hors connexion.</small>
+</footer>
+
+<script>
+function filterSite(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  document.querySelectorAll('.searchable').forEach(group=>{
+    let found=false;
+    group.querySelectorAll('.card,.fault,.brand').forEach(el=>{
+      const ok=!q || el.innerText.toLowerCase().includes(q);
+      el.classList.toggle('hidden',!ok);
+      if(ok) found=true;
+    });
+  });
+}
+
+function n(id){return parseFloat(document.getElementById(id).value)}
+function calcOhm(){let u=n('ohmU'),r=n('ohmR');document.getElementById('ohmRes').textContent=(isFinite(u)&&isFinite(r)&&r!==0)?`I = ${(u/r).toFixed(4)} A (${(u/r*1000).toFixed(1)} mA)`:'Entre U et R valides.'}
+function calcDrop(){let l=n('dropL'),i=n('dropI'),sec=n('dropS');if(isFinite(l)&&isFinite(i)&&isFinite(sec)&&sec>0){let d=2*l*i*0.0175/sec;document.getElementById('dropRes').textContent=`ΔU ≈ ${d.toFixed(2)} V` }else document.getElementById('dropRes').textContent='Entre des valeurs valides.'}
+function calcBat(){let c=n('batC'),i=n('batI');document.getElementById('batRes').textContent=(isFinite(c)&&isFinite(i)&&i>0)?`Autonomie théorique ≈ ${(c/i).toFixed(1)} h`:'Entre des valeurs valides.'}
+function makeReport(){let d=new Date().toLocaleString('fr-FR');let val=id=>document.getElementById(id).value.trim();document.getElementById('reportOut').value=`COMPTE RENDU D’INTERVENTION SSI
+Date : ${d}
+Site / client : ${val('rSite')||'—'}
+Matériel : ${val('rMat')||'—'}
+
+DÉFAUT CONSTATÉ
+${val('rDef')||'—'}
+
+CONTRÔLES / TRAVAUX RÉALISÉS
+${val('rAct')||'—'}
+
+ÉTAT EN FIN D’INTERVENTION
+${document.getElementById('rEtat').value}
+
+Document généré avec Le SSI pour les Nuls • FR.`}
+async function copyReport(){let t=document.getElementById('reportOut');if(!t.value)makeReport();try{await navigator.clipboard.writeText(t.value);alert('Rapport copié.')}catch(e){t.select();document.execCommand('copy');alert('Rapport copié.')}}
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
+</script>
+</body>
+</html>
